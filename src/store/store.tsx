@@ -1,13 +1,15 @@
-import React, {createContext} from "react";
+import React, {createContext, useReducer} from "react";
 import {IState} from "../sharedServices/stateService";
+import {reducer} from "../reducers/reducer";
 
 const initialState: IState = {
     episodes:[],
     favourites:[]
 };
 
-export const Store = createContext<IState>(initialState);
+export const Store = createContext<IState | any>(initialState);
 
 export const StoreProvider = (props: any) => {
-    return <Store.Provider value={initialState}>{props.child}</Store.Provider>;
+    const [state, dispatch] = useReducer(reducer, initialState);
+    return <Store.Provider value={{state, dispatch}}>{props.children}</Store.Provider>;
 }

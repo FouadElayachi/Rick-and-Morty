@@ -1,13 +1,10 @@
-import React, {useContext} from 'react';
-import {Store, StoreProvider} from "./store/store";
+import React from 'react';
+import EpisodesList from "./Components/EpisodesList";
 
-function App() {
-  const store = useContext(Store);
-  return (
-      <StoreProvider>
-          {console.log(store)}
-      </StoreProvider>
-  );
+const App: React.FC = () => {
+    return (
+        <EpisodesList />
+    )
 }
 
 export default App;
