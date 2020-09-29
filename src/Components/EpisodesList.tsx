@@ -43,7 +43,7 @@ const EpisodesList: React.FC = () => {
                         <img src={episode.image.medium} alt={`Rick and Morty ${episode.name}`} />
                         <GridListTileBar
                             title={episode.name}
-                            subtitle={<span>Season: {episode.season}</span>}
+                            subtitle={<span>Season: {episode.season} | Episode: {episode.number}</span>}
                         />
                     </GridListTile>
                 ))}
