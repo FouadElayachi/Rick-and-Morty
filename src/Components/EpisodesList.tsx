@@ -5,7 +5,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
-import StarIcon from '@material-ui/icons/Star';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import {Store} from "../store/store";
 import {fetchData} from "../actions/fetchData";
 import {toggleFav} from "../actions/toggleFav";
@@ -71,7 +71,7 @@ const EpisodesList: React.FC = () => {
                             subtitle={<span>Season: {episode.season} | Episode: {episode.number}</span>}
                             actionIcon={
                                 <IconButton style={style} onClick={() => toggleFav(episode, dispatch, state)} aria-label="Add to favourites list" className={classes.icon}>
-                                    <StarIcon />
+                                    <FavoriteIcon />
                                 </IconButton>
                             }
                         />
