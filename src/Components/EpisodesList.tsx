@@ -1,28 +1,48 @@
 import React, {useContext, useEffect} from "react";
-import { makeStyles } from '@material-ui/core/styles';
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import IconButton from '@material-ui/core/IconButton';
+import StarIcon from '@material-ui/icons/Star';
 import {Store} from "../store/store";
 import {fetchData} from "../actions/fetchData";
+import {toggleFav} from "../actions/toggleFav";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        overflow: 'hidden',
-        backgroundColor: theme.palette.background.paper,
-    },
-    gridList: {
-        width: 800,
-        height: 1000
-    },
-    icon: {
-        color: 'rgba(255, 255, 255, 0.54)',
-    },
-}));
+//this interface should be moved from this file
+interface IEpisode {
+    airdate: string,
+    airstamp: string,
+    airtime: string,
+    id: number,
+    image: { medium: string, original: string },
+    name: string,
+    number: number,
+    runtime: number,
+    season: number,
+    summary: string,
+    url: string
+}
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-around',
+            overflow: 'hidden',
+            backgroundColor: theme.palette.background.paper,
+        },
+        gridList: {
+            width: 800,
+            height: 1000,
+        },
+        icon: {
+            color: 'rgba(255, 255, 255, 0.54)',
+        },
+    }),
+);
 
 const EpisodesList: React.FC = () => {
     const classes = useStyles();
@@ -32,18 +52,25 @@ const EpisodesList: React.FC = () => {
         state.episodes.length === 0 && fetchData(dispatch);
     })
 
+    console.log(state.favourites);
+
     return(
         <div className={classes.root}>
             <GridList cellHeight={180} className={classes.gridList}>
                 <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
                     <ListSubheader component="div">Episodes list</ListSubheader>
                 </GridListTile>
-                {state.episodes.map((episode: any) => (
+                {state.episodes.map((episode: IEpisode) => (
                     <GridListTile key={episode.id}>
                         <img src={episode.image.medium} alt={`Rick and Morty ${episode.name}`} />
                         <GridListTileBar
                             title={episode.name}
                             subtitle={<span>Season: {episode.season} | Episode: {episode.number}</span>}
+                            actionIcon={
+                                <IconButton style={{color: "orange"}} onClick={() => toggleFav(episode, dispatch)} aria-label="Add to favourites list" className={classes.icon}>
+                                    <StarIcon />
+                                </IconButton>
+                            }
                         />
                     </GridListTile>
                 ))}
