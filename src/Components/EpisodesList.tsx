@@ -54,26 +54,29 @@ const EpisodesList: React.FC = () => {
 
     console.log(state.favourites);
 
+    let style = {};
     return(
         <div className={classes.root}>
             <GridList cellHeight={180} className={classes.gridList}>
                 <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
                     <ListSubheader component="div">Episodes list</ListSubheader>
                 </GridListTile>
-                {state.episodes.map((episode: IEpisode) => (
+                {state.episodes.map((episode: IEpisode) => {
+                    state.favourites.includes(episode) ? style={color: 'orange'}: style={}
+                    return(
                     <GridListTile key={episode.id}>
                         <img src={episode.image.medium} alt={`Rick and Morty ${episode.name}`} />
                         <GridListTileBar
                             title={episode.name}
                             subtitle={<span>Season: {episode.season} | Episode: {episode.number}</span>}
                             actionIcon={
-                                <IconButton style={{color: "orange"}} onClick={() => toggleFav(episode, dispatch)} aria-label="Add to favourites list" className={classes.icon}>
+                                <IconButton style={style} onClick={() => toggleFav(episode, dispatch, state)} aria-label="Add to favourites list" className={classes.icon}>
                                     <StarIcon />
                                 </IconButton>
                             }
                         />
                     </GridListTile>
-                ))}
+                )})}
             </GridList>
         </div>
     )
