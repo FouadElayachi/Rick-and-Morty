@@ -8,9 +8,6 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import CircularStatic from "../Components/CircularStatic";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
-
-const EpisodesList = lazy<any>(() => import('../Components/EpisodesList'));
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -27,6 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+const EpisodesList = lazy<any>(() => import('../Components/EpisodesList'));
+
 const FavouritesPage: FunctionComponent = () => {
     const classes = useStyles();
     const { state, dispatch } = useContext(Store);
@@ -37,9 +36,10 @@ const FavouritesPage: FunctionComponent = () => {
 
     const props: any = {
         episodes: state.favourites,
-        store: { state, dispatch },
-        toggleFav,
-        favourites: state.favourites
+        toggleFav: toggleFav,
+        favourites: state.favourites,
+        dispatch: dispatch,
+        state: state
     }
     return (
         <div className={classes.root}>
