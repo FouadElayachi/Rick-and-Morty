@@ -1,11 +1,11 @@
 import React from 'react';
 import EpisodesList from "./Components/EpisodesList";
-import NavBar from "./Components/NavBar";
+import HomePage from "./Pages/HomePage";
 
 const App: React.FC = () => {
     return (
         <>
-            <NavBar />
+            <HomePage />
             <EpisodesList />
         </>
     )

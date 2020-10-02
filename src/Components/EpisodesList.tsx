@@ -10,21 +10,6 @@ import {Store} from "../store/store";
 import {fetchData} from "../actions/fetchData";
 import {toggleFav} from "../actions/toggleFav";
 
-//this interface should be moved from this file
-interface IEpisode {
-    airdate: string,
-    airstamp: string,
-    airtime: string,
-    id: number,
-    image: { medium: string, original: string },
-    name: string,
-    number: number,
-    runtime: number,
-    season: number,
-    summary: string,
-    url: string
-}
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -44,41 +29,11 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const EpisodesList: React.FC = () => {
-    const classes = useStyles();
-    const { state, dispatch } = useContext(Store);
-
-    useEffect(() => {
-        state.episodes.length === 0 && fetchData(dispatch);
-    })
-
-    console.log(state.favourites);
-
-    let style = {};
+const EpisodesList: React.FC = (props:any) => {
     return(
-        <div className={classes.root}>
-            <GridList cellHeight={180} className={classes.gridList}>
-                <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-                    <ListSubheader component="div">Episodes list</ListSubheader>
-                </GridListTile>
-                {state.episodes.map((episode: IEpisode) => {
-                    state.favourites.includes(episode) ? style={color: 'orange'}: style={}
-                    return(
-                    <GridListTile key={episode.id}>
-                        <img src={episode.image.medium} alt={`Rick and Morty ${episode.name}`} />
-                        <GridListTileBar
-                            title={episode.name}
-                            subtitle={<span>Season: {episode.season} | Episode: {episode.number}</span>}
-                            actionIcon={
-                                <IconButton style={style} onClick={() => toggleFav(episode, dispatch, state)} aria-label="Add to favourites list" className={classes.icon}>
-                                    <FavoriteIcon />
-                                </IconButton>
-                            }
-                        />
-                    </GridListTile>
-                )})}
-            </GridList>
-        </div>
+        <>
+
+        </>
     )
 }
 
