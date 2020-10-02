@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, lazy, Suspense} from "react";
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -9,6 +9,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import {Store} from "../store/store";
 import {fetchData} from "../actions/fetchData";
 import {toggleFav} from "../actions/toggleFav";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 //this interface should be moved from this file
 interface IEpisode {
@@ -35,14 +36,13 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: theme.palette.background.paper,
         },
         gridList: {
-            width: 800,
+            width: 1000,
             height: 1000,
-        },
-        icon: {
-            color: 'rgba(255, 255, 255, 0.54)',
-        },
+        }
     }),
 );
+
+const EpisodesList = lazy<any>(() => import('../Components/EpisodesList'));
 
 const HomePage: React.FC = () => {
     const classes = useStyles();
@@ -54,29 +54,23 @@ const HomePage: React.FC = () => {
 
     console.log(state.favourites);
 
-    let style = {};
+    const props = {
+        episodes: state.episodes,
+        favourites: state.favourites,
+        toggleFav: toggleFav,
+        dispatch: dispatch,
+        state: state
+    };
+
     return(
         <div className={classes.root}>
             <GridList cellHeight={180} className={classes.gridList}>
                 <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
                     <ListSubheader component="div">Episodes list</ListSubheader>
                 </GridListTile>
-                {state.episodes.map((episode: IEpisode) => {
-                    state.favourites.includes(episode) ? style={color: 'orange'}: style={}
-                    return(
-                        <GridListTile key={episode.id}>
-                            <img src={episode.image.medium} alt={`Rick and Morty ${episode.name}`} />
-                            <GridListTileBar
-                                title={episode.name}
-                                subtitle={<span>Season: {episode.season} | Episode: {episode.number}</span>}
-                                actionIcon={
-                                    <IconButton style={style} onClick={() => toggleFav(episode, dispatch, state)} aria-label="Add to favourites list" className={classes.icon}>
-                                        <FavoriteIcon />
-                                    </IconButton>
-                                }
-                            />
-                        </GridListTile>
-                    )})}
+                <Suspense fallback={<CircularProgress disableShrink />}>
+                    <EpisodesList {...props} />
+                </Suspense>
             </GridList>
         </div>
     )
