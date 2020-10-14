@@ -49,7 +49,7 @@ const HomePage: React.FC = () => {
         <div className={classes.root}>
             <GridList cellHeight={180} className={classes.gridList}>
                 <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-                    <ListSubheader component="div">Episodes list</ListSubheader>
+                    <ListSubheader component="div">Favorites list</ListSubheader>
                 </GridListTile>
                 <Suspense fallback={<CircularStatic />}>
                     <EpisodesList {...props} />

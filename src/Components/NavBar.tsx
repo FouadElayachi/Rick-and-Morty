@@ -36,18 +36,6 @@ const useStyles = makeStyles((theme: Theme) =>
             height:"100%",
             borderRadius:0,
         },
-
-        loginButton:{
-            background:"#36d613",
-            color:"#fff",
-            borderRadius:"25px",
-            padding:"0px 25px",
-
-            '&:hover':{
-                background: 'green',
-                boxShadow: "0px 2px 10px #888888"
-            }
-        }
     }),
 );
 
@@ -64,7 +52,6 @@ const NavBar: React.FC = () => {
                     </Grid>
                     <StyledLink to="/">EPISODES</StyledLink>
                     <StyledLink to="/favourites">FAVOURITES</StyledLink>
-                    <Button color="inherit" className={classes.loginButton}>Login</Button>
                 </Toolbar>
             </Grid>
         </AppBar>
