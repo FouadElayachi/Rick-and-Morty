@@ -1,7 +1,7 @@
 import React from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import { Grid, Button, AppBar, Toolbar, Avatar} from "@material-ui/core";
-import {Link} from 'react-router-dom';
+import StyledLink from "./StyledLink/StyledLink";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -35,8 +35,6 @@ const useStyles = makeStyles((theme: Theme) =>
         avatar:{
             height:"100%",
             borderRadius:0,
-
-
         },
 
         loginButton:{
@@ -64,8 +62,8 @@ const NavBar: React.FC = () => {
                             <Avatar src="https://upload.wikimedia.org/wikipedia/fr/c/c8/Rick_and_Morty_logo.png" className={classes.avatar} />
                         </Button>
                     </Grid>
-                    <Link color="inherit" to="/" className={classes.buttonFontSize}>Episodes</Link>
-                    <Link color="inherit" to="/favourites" className={classes.buttonFontSize}>Favourites</Link>
+                    <StyledLink to="/">EPISODES</StyledLink>
+                    <StyledLink to="/favourites">FAVOURITES</StyledLink>
                     <Button color="inherit" className={classes.loginButton}>Login</Button>
                 </Toolbar>
             </Grid>
