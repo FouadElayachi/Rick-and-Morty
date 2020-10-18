@@ -3,21 +3,14 @@ import {Store} from "../store/store";
 import { fetchData } from '../actions/fetchData';
 import { toggleFav } from '../actions/toggleFav';
 import CircularStatic from "../Components/CircularStatic";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-around',
-            overflow: 'hidden',
-            backgroundColor: theme.palette.background.paper,
-        },
-        gridList: {
-            width: 1000,
-            height: 1000,
+            flexGrow: 1,
+            marginTop: 10
         }
     }),
 );
