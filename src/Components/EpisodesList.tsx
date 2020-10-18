@@ -1,14 +1,9 @@
-import React, {useContext, useEffect, FunctionComponent} from "react";
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
+import React, {FunctionComponent} from "react";
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import {Store} from "../store/store";
-import {fetchData} from "../actions/fetchData";
-import {toggleFav} from "../actions/toggleFav";
+import {Card, CardActionArea, CardContent, CardMedia, CardActions, Grid} from "@material-ui/core";
+import Typography from '@material-ui/core/Typography';
 
 interface IEpisode {
     airdate: string,
@@ -24,10 +19,16 @@ interface IEpisode {
     url: string
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
+        root: {
+            maxWidth: 345,
+        },
         icon: {
-            color: 'rgba(255, 255, 255, 0.54)',
+            color: 'rgba(O, O, O, 0.54)',
+        },
+        img: {
+            width: 500
         }
     }),
 );
@@ -40,18 +41,33 @@ const EpisodesList: FunctionComponent = (props:any) => {
             episodes.map((episode: IEpisode) => {
                 favourites.includes(episode) ? style={color: 'orange'}: style={}
                 return(
-                    <GridListTile key={episode.id}>
-                        <img src={episode.image.medium} alt={`Rick and Morty ${episode.name}`} />
-                        <GridListTileBar
-                            title={episode.name}
-                            subtitle={<span>Season: {episode.season} | Episode: {episode.number}</span>}
-                            actionIcon={
+                    <Grid key={episode.id} item>
+                        <Card className={classes.root}>
+                            <CardActionArea>
+                                <CardMedia
+                                    className={classes.img}
+                                    component="img"
+                                    alt={`Rick and Morty ${episode.name}`}
+                                    height="140"
+                                    image={episode.image.medium}
+                                    title={`Rick and Morty ${episode.name}`}
+                                />
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        {episode.name}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        {<span>Season: {episode.season} | Episode: {episode.number}</span>}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                            <CardActions>
                                 <IconButton style={style} onClick={() => toggleFav(episode, dispatch, state)} aria-label="Add to favourites list" className={classes.icon}>
                                     <FavoriteIcon />
                                 </IconButton>
-                            }
-                        />
-                    </GridListTile>
+                            </CardActions>
+                        </Card>
+                    </Grid>
                 )})
     )
 }

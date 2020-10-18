@@ -2,11 +2,9 @@ import React, { FunctionComponent, useContext, useEffect, Suspense, lazy } from 
 import {Store} from "../store/store";
 import { fetchData } from '../actions/fetchData';
 import { toggleFav } from '../actions/toggleFav';
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import CircularStatic from "../Components/CircularStatic";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {Grid} from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -42,16 +40,11 @@ const FavouritesPage: FunctionComponent = () => {
         state: state
     }
     return (
-        <div className={classes.root}>
-            <GridList cellHeight={180} className={classes.gridList}>
-                <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-                    <ListSubheader component="div">Episodes list</ListSubheader>
-                </GridListTile>
-                <Suspense fallback={<CircularStatic />}>
-                    <EpisodesList {...props} />
-                </Suspense>
-            </GridList>
-        </div>
+        <Grid className={classes.root} container justify="center" spacing={3}>
+            <Suspense fallback={<CircularStatic />}>
+                <EpisodesList {...props} />
+            </Suspense>
+        </Grid>
     )
 }
 

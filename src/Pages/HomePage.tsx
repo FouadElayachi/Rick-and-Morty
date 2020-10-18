@@ -1,26 +1,17 @@
 import React, {useContext, useEffect, lazy, Suspense} from "react";
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import ListSubheader from '@material-ui/core/ListSubheader';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import {Store} from "../store/store";
 import {fetchData} from "../actions/fetchData";
 import {toggleFav} from "../actions/toggleFav";
 import CircularStatic from "../Components/CircularStatic";
+import {Grid} from "@material-ui/core";
 
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-around',
-            overflow: 'hidden',
-            backgroundColor: theme.palette.background.paper,
-        },
-        gridList: {
-            width: 1000,
-            height: 1000,
+            flexGrow: 1,
+            marginTop: 10
         }
     }),
 );
@@ -45,17 +36,13 @@ const HomePage: React.FC = () => {
         state: state
     };
 
+
     return(
-        <div className={classes.root}>
-            <GridList cellHeight={180} className={classes.gridList}>
-                <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-                    <ListSubheader component="div">Favorites list</ListSubheader>
-                </GridListTile>
-                <Suspense fallback={<CircularStatic />}>
-                    <EpisodesList {...props} />
-                </Suspense>
-            </GridList>
-        </div>
+                <Grid className={classes.root} container justify="center" spacing={3}>
+                    <Suspense fallback={<CircularStatic />}>
+                        <EpisodesList {...props} />
+                    </Suspense>
+                </Grid>
     )
 }
 
